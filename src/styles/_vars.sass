@@ -1,0 +1,22 @@
+$mid_black: #2e332d
+$white: #ffffff
+$black: #000000
+
+// Keepin' it Ease-y
+$speed_metal: 666ms
+$ease_in: cubic-bezier(0.550, 0.055, 0.675, 0.190)
+$ease_out: cubic-bezier(0.215, 0.610, 0.355, 1.000)
+$evil_ease: cubic-bezier(0.666, 0.000, 0.333, 1.000)
+
+// Breakpoints
+$media_480: 480px
+$media_667: 667px
+$media_768: 768px
+$media_1024: 1024px
+$media_1025: 1025px
+$media_1280: 1280px
+$media_1440: 1400px
+
+@mixin respond-above($min-size)
+  @media all and (min-width: $min-size)
+    @content

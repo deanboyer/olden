@@ -1,0 +1,1 @@
+window.Olden = window.Olden || {}
