@@ -16,12 +16,10 @@
   ],
   "dependencies": {
     "jquery": null,
-    "modernizr": null,
+    "modernizr": "2.8.3",
     "underscore": null,
     "jquery-easing": null,
     "history.js": null,
-    "sass-meyer-reset": null,
-    "greensock": null,
-    "slick-carousel": "^1.6.0"
+    "sass-meyer-reset": null
   }
 }

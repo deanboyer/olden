@@ -9,7 +9,7 @@ Env = require './env'
 
 Utils = {
   'transform':
-    Modernizr.prefixed('transform').replace(/([A-Z])/g, (str,m1) => 
+    Modernizr.prefixed('transform').replace(/([A-Z])/g, (str,m1) =>
       return '-' + m1.toLowerCase()
     ).replace(/^ms-/,'-ms-')
   ,
@@ -18,7 +18,7 @@ Utils = {
     vals = if Modernizr.csstransforms3d then '(' + x + ', ' + y + ', 0)' else '(' + x + ', ' + y + ')'
     return tran + vals
   ,
-  'transition_end': 
+  'transition_end':
     (=>
       transEndEventNames = {
         'WebkitTransition' : 'webkitTransitionEnd',
@@ -35,10 +35,10 @@ Utils = {
     {
       'any': ->
         return (
-          (/Android/i).test(navigator.userAgent) or 
-          (/BlackBerry/i).test(navigator.userAgent) or 
-          (/iPhone|iPad|iPod/i).test(navigator.userAgent) or 
-          (/Opera Mini/i).test(navigator.userAgent) or 
+          (/Android/i).test(navigator.userAgent) or
+          (/BlackBerry/i).test(navigator.userAgent) or
+          (/iPhone|iPad|iPod/i).test(navigator.userAgent) or
+          (/Opera Mini/i).test(navigator.userAgent) or
           (/IEMobile/i).test(navigator.userAgent)
         )
     }
@@ -80,10 +80,9 @@ class Application
     @sliderEvents()
     @closeSlider()
 
-    $(document).on 'ready', () ->
-      setTimeout (->
-        $('#loader').css 'top', '-100%'
-      ), 666
+    setTimeout (->
+      $('#loader').css 'top', '-100%'
+    ), 666
 
   ###
   *------------------------------------------*
@@ -105,7 +104,7 @@ class Application
         $('#olden-flag').css
           'top': '0',
           'transform': 'translate(-50%, 0%) scale(0.5,0.5)'
-        
+
       ), 333
 
       setTimeout (->
