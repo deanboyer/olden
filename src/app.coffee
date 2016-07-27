@@ -44,6 +44,9 @@ Utils = {
     }
 }
 
+# Carousel
+CarouselComponent = require './components/carousel-component'
+
 class Application
 
   ###
@@ -64,6 +67,7 @@ class Application
     @$closeBtn = $('#close-btn')
     @$findUs = $('#locations-btn')
     @$backup = $('#back-top')
+    @active_carousel = null
 
     @build()
 
@@ -74,6 +78,10 @@ class Application
   | Build.
   *----------------------------------------###
   build: ->
+
+    # Carousel
+    @ladies_carousel_c = new CarouselComponent({'$el': $('#ladies-carousel')});
+    @mens_carousel_c = new CarouselComponent({'$el': $('#mens-carousel')});
 
     @slideEvent()
     @scrollEvent()
@@ -90,9 +98,8 @@ class Application
   |
   | Fire off the slider.
   *----------------------------------------###
-  sliderEvents: ->
-    @$coll.on 'click', (e) ->
-
+  sliderEvents: =>
+    @$coll.on 'click', (e) =>
       $(@).removeClass('fire-it-off')
       $(e.currentTarget).addClass('fire-it-off')
 
@@ -103,11 +110,20 @@ class Application
 
         $('#olden-flag').css
           'top': '0',
-          'transform': 'translate(-50%, 0%) scale(0.5,0.5)'
+          'transform': 'translate(-50%, 0%) scale(0.5,0.5)',
+          'transform': 'translate3d(-50%, 0%, 0) scale(0.5,0.5)'
 
       ), 333
 
-      setTimeout (->
+      setTimeout (=>
+        # ACTIVATE CAROUSEL
+        if $(e.currentTarget).attr('id') is 'ladies-con'
+          @active_carousel = 'ladies'
+          @ladies_carousel_c.activate()
+        else
+          @active_carousel = 'mens'
+          @mens_carousel_c.activate()
+
         $('#collection-slider').addClass('inView')
       ), 666
 
@@ -117,10 +133,16 @@ class Application
   |
   | Close the slider.
   *----------------------------------------###
-  closeSlider: ->
-    @$closeBtn.on 'click', () ->
+  closeSlider: =>
+    @$closeBtn.on 'click', () =>
       $('.collection').removeClass('fire-it-off')
       $('#collection-slider').removeClass('inView')
+
+      # SUSPEND CAROUSEL
+      if @active_carousel is 'ladies'
+        @ladies_carousel_c.suspend()
+      else
+        @mens_carousel_c.suspend()
 
       setTimeout (->
         $('#mens-con').css 'left', '50%'
@@ -203,7 +225,8 @@ class Application
   flagAction: =>
     $('#olden-flag').css
       'top': '0',
-      'transform': 'translate(-50%, 0%) scale(0.5,0.5)'
+      'transform': 'translate(-50%, 0%) scale(0.5,0.5)',
+      'transform': 'translate3d(-50%, 0%, 0) scale(0.5,0.5)'
 
 module.exports = Application
 
