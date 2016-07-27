@@ -23,6 +23,9 @@ class CarouselComponent
     # Cache selectors
     @$slider = $('.carousel-slider', @$el)
     @$slide = $('.carousel-slider li', @$el)
+    @$control = $('.control', @$el)
+    @$control_prev = $('.control.prev', @$el)
+    @$control_next = $('.control.next', @$el)
     @total_slides = @$slide.length
 
     # Draggable vars
@@ -112,6 +115,19 @@ class CarouselComponent
 
   ###
   *------------------------------------------*
+  | onClickControl:void (=)
+  |
+  | Click control.
+  *----------------------------------------###
+  onClickControl: (e) =>
+    $t = $(e.currentTarget)
+    if $t.hasClass('disabled') is true
+      return false
+
+    if $t.hasClass('prev') then @previous() else @next()
+
+  ###
+  *------------------------------------------*
   | previous:void (=)
   |
   | Previous slide.
@@ -121,6 +137,7 @@ class CarouselComponent
       @active_index = @active_index - 1
 
     @updateSlider()
+    @updateControls()
 
   ###
   *------------------------------------------*
@@ -133,6 +150,7 @@ class CarouselComponent
       @active_index = @active_index + 1
 
     @updateSlider()
+    @updateControls()
 
   ###
   *------------------------------------------*
@@ -156,22 +174,39 @@ class CarouselComponent
 
   ###
   *------------------------------------------*
+  | updateControls:void (=)
+  |
+  | Update controls.
+  *----------------------------------------###
+  updateControls: =>
+    @$control.removeClass('disabled')
+
+    if @active_index is 0
+      @$control_prev.addClass('disabled')
+    if @active_index is @total_slides - 1
+      @$control_next.addClass('disabled')
+
+  ###
+  *------------------------------------------*
   | reset:void (=)
   |
   | Reset.
   *----------------------------------------###
   reset: =>
-    @$slider
-      .addClass('no-trans')
-      .css(Olden.utils.transform, Olden.utils.translate('0%', 0))
-
-    @$slider[0].offsetHeight
-    @$slider.removeClass('no-trans')
-
-    @trans_x = 0
-    @active_index = 0
+    # To reset back to first slide, uncomment the following:
+    # @$slider
+    #   .addClass('no-trans')
+    #   .css(Olden.utils.transform, Olden.utils.translate('0%', 0))
+    #
+    # @$slider[0].offsetHeight
+    # @$slider.removeClass('no-trans')
+    #
+    #
+    # @active_index = 0
+    # @trans_x = 0
     @y_axis = false
     @swiped = false
+    @updateControls()
 
   ###
   *------------------------------------------*
@@ -187,6 +222,10 @@ class CarouselComponent
       .on('mousedown touchstart', @onTouchstart)
       .on('mousemove touchmove', @onTouchmove)
 
+    @$control
+      .off('click')
+      .on('click', @onClickControl)
+
   ###
   *------------------------------------------*
   | suspend:void (-)
@@ -197,5 +236,7 @@ class CarouselComponent
     @$el
       .removeClass('active')
       .off('mousedown touchstart mousemove touchmove')
+
+    @$control.off('click')
 
 module.exports = CarouselComponent

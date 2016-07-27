@@ -310,7 +310,7 @@ p
 						display: inline-block
 
 					&.swiped
-						transition: transform ($speed_metal / 2) $ease_out
+						transition: transform 333ms $ease_out
 
 					&.no-trans
 						transition: none
@@ -320,6 +320,26 @@ p
 					width: 100%
 					height: auto
 					height: auto
+
+			.control
+				position: absolute
+				top: 50%
+				left: 30px
+				width: 30px
+				height: 40px
+				cursor: pointer
+				background: url(../images/x.png) no-repeat
+					size: 100%
+				opacity: 1
+				transition: opacity 333ms $evil_ease
+
+				&.next
+					left: auto
+					right: 30px
+
+				&.disabled
+					cursor: default
+					opacity: 0.2
 
 			&.inView
 				visibility: visible
