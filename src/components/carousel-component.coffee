@@ -180,7 +180,6 @@ class CarouselComponent
   | Activate.
   *----------------------------------------###
   activate: ->
-    console.log 'activate:', @$el.attr('id')
     @reset()
     @$el
       .addClass('active')
@@ -195,7 +194,6 @@ class CarouselComponent
   | Suspend.
   *----------------------------------------###
   suspend: ->
-    console.log 'suspend:', @$el.attr('id')
     @$el
       .removeClass('active')
       .off('mousedown touchstart mousemove touchmove')
